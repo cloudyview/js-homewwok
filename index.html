@@ -15,14 +15,14 @@
     <div class="main-header">
       <div class="container">
         <h1>JavaScript编程入门</h1>
-        <h2>戴军的作业及其它相关信息集成页</h2>
+        <h2><font color="white">戴军的作业及其它相关信息集成页</font></h2>
       </div>
     </div>
     <div class="container">
       <div class="panel-body">
-        <div id="sendMyWords" class="btn btn-primary" v-on:click="sendData">有话对老师说</div>
+        <div class="btn btn-primary" v-on:click="sendData">有话对老师说</div>
       </div>
-     <div class= col-md-12>
+     <div class= col-md-8>
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">我的心里话</h3>
@@ -46,6 +46,20 @@
         </div>
       </div>
      </div>
+     <div class= col-md-4>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">团队列表</h3>
+            </div>
+            <div class="panel-body">
+                <div  v-for="content                                                                                                                                                              in lessons">
+                    <div class="media-body">
+                        <h4 class="media-heading">
+                          {{ item.teams }}
+                        </div>
+            </div>
+          </div>
+     </div>
     </div>
   </div>
 </body>
@@ -58,13 +72,24 @@
   var app = new Vue({
     el: '#app',   // #app 和html中div#id的 app 对应
     data: {
-      wordsList: []  // 变量wordsList可以在html使用
+      wordsList: [],  // 变量wordsList可以在html使用
+      lessons: [], //
     },
     methods: {
       fetchData: function() {
         axios.get('https://js.xinshengdaxue.com/api/v1/learnJS/course/1/words')
           .then(function (response) {
             app.wordsList = response.data.words;
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      },
+
+      fetchData: function() {
+        axios.get('https://js.xinshengdaxue.com/api/v1/learnJS/course/1/teams')
+          .then(function (response) {
+            app.lessons = response.data.teams;
           })
           .catch(function (error) {
             console.log(error);
